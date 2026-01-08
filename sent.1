@@ -1,0 +1,102 @@
+.Dd January 8, 2026
+.Dt SENT 1
+.Os
+.Sh NAME
+.Nm sent
+.Nd simple plaintext presentation tool
+.Sh SYNOPSIS
+.Nm
+.Op Fl v
+.Op Ar file
+.Sh DESCRIPTION
+.Nm
+is a simple plain text presentation tool for macOS. sent does not need LaTeX,
+LibreOffice or any other fancy file format.
+Instead, sent reads plain text describing the slides. sent can also draw
+images in common formats (PNG, JPEG, GIF, etc.).
+.Pp
+Every paragraph represents a slide in the presentation.
+Especially for presentations using the Takahashi method this is very nice and
+allows you to write the presentation for a quick lightning talk within a few
+minutes.
+.Pp
+This is a native macOS port using Cocoa/AppKit, eliminating the need for X11/XQuartz.
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl v
+Print version information to stdout and exit.
+.El
+.Sh USAGE
+.Bl -tag -width Ds
+.It Em Mouse commands
+.Bl -tag -width Ds
+.It Sy Left click
+Go to next slide, if existent.
+.It Sy Right click
+Go to previous slide, if existent.
+.It Sy Scroll up/down
+Navigate between slides.
+.El
+.It Em Keyboard commands
+.Bl -tag -width Ds
+.It Sy Escape | q
+Quit.
+.It Sy r
+Reload the slides.
+Only works on file input.
+.It Sy Right | Return | Space | l | j | Down | PageDown | n
+Go to next slide, if existent.
+.It Sy Left | Backspace | h | k | Up | PageUp | p
+Go to previous slide, if existent.
+.El
+.El
+.Sh FORMAT
+The presentation file is made up of at least one paragraph, with an
+empty line separating two slides.
+Each input line is interpreted literally, except from control characters
+at the beginning of lines described as follows:
+.Bl -tag -width Ds
+.It Sy @
+Create individual slide containing the image pointed to by the filename
+following the
+.Sy @ .
+Supports PNG, JPEG, GIF, TIFF, BMP, HEIC, and other formats supported by macOS.
+.It Sy #
+Ignore this input line.
+.It Sy \e
+Create input line using the characters following the
+.Sy \e
+without interpreting them.
+.El
+.Sh SUPPORTED IMAGE FORMATS
+All image formats supported by macOS NSImage:
+.Bl -bullet -compact
+.It
+PNG
+.It
+JPEG / JPG
+.It
+GIF
+.It
+TIFF
+.It
+BMP
+.It
+HEIC
+.It
+WebP (macOS 11+)
+.El
+.Sh CUSTOMIZATION
+.Nm
+can be customized by creating a custom config.h and (re)compiling the
+source code.
+This keeps it fast, secure and simple.
+.Sh BUILDING
+.Bd -literal
+make clean
+make
+make install
+.Ed
+.Sh AUTHORS
+Original sent by suckless.org.
+macOS native port.

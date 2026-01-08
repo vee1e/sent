@@ -1,0 +1,20 @@
+tense - macOS Native Port
+
+A simple plaintext presentation tool
+
+Features:
+- No dependencies on X11
+- Native Cocoa graphics
+- CoreText font rendering
+
+Navigation:
+- Arrow keys to move
+- Space/Return to advance
+- Backspace to go back
+- Q or Escape to quit
+
+This is a test slide
+with multiple lines
+to verify text rendering
+
+Thank you!
