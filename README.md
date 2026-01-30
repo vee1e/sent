@@ -1,6 +1,6 @@
-# sent - Simple Plaintext Presentation Tool (macOS Native Port)
+# tens - Simple Plaintext Presentation Tool (macOS Native Port)
 
-sent is a simple plaintext presentation tool that displays slides in a window.
+tens is a simple plaintext presentation tool that displays slides in a window.
 
 This is a **native macOS port** that uses Cocoa/AppKit instead of X11, eliminating the need for XQuartz.
 
@@ -22,7 +22,7 @@ make
 ## Usage
 
 ```bash
-./sent [FILE]
+./tens [FILE]
 ```
 
 If FILE is omitted or equals `-`, stdin will be read.
@@ -37,7 +37,7 @@ If FILE is omitted or equals `-`, stdin will be read.
 ### Example
 
 ```
-Welcome to sent
+Welcome to tens
 
 @logo.png
 

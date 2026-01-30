@@ -296,7 +296,7 @@ imgload(Slide *s)
     NSImage *image = [[NSImage alloc] initWithContentsOfFile:path];
     
     if (!image) {
-        fprintf(stderr, "sent: Unable to load image '%s'\n", s->embed);
+        fprintf(stderr, "tens: Unable to load image '%s'\n", s->embed);
         return;
     }
     
@@ -432,7 +432,7 @@ reload(const Arg *arg)
     unsigned int i;
 
     if (!fname) {
-        fprintf(stderr, "sent: Cannot reload from stdin. Use a file!\n");
+        fprintf(stderr, "tens: Cannot reload from stdin. Use a file!\n");
         return;
     }
 
@@ -440,14 +440,14 @@ reload(const Arg *arg)
     slidecount = 0;
 
     if (!(fp = fopen(fname, "r")))
-        die("sent: Unable to open '%s' for reading:", fname);
-    load(fp);
-    fclose(fp);
+die("tens: Unable to open '%s' for reading:", fname);
+	load(fp);
+	fclose(fp);
 
-    LIMIT(idx, 0, slidecount-1);
-    for (i = 0; i < (unsigned int)slidecount; i++)
-        imgload(&slides[i]);
-    xdraw();
+	LIMIT(idx, 0, slidecount-1);
+	for (i = 0; i < (unsigned int)slidecount; i++)
+		imgload(&slides[i]);
+	xdraw();
 }
 
 void
@@ -467,9 +467,9 @@ load(FILE *fp)
         if (!p)
             break;
 
-        if ((slidecount+1) * sizeof(*slides) >= size)
-            if (!(slides = realloc(slides, (size += BUFSIZ))))
-                die("sent: Unable to reallocate %zu bytes:", size);
+if ((slidecount+1) * sizeof(*slides) >= size)
+			if (!(slides = realloc(slides, (size += BUFSIZ))))
+				die("tens: Unable to reallocate %zu bytes:", size);
 
         /* read one slide */
         maxlines = 0;
@@ -482,16 +482,16 @@ load(FILE *fp)
             if (buf[0] == '#')
                 continue;
 
-            /* grow lines array */
-            if (s->linecount >= maxlines) {
-                maxlines = 2 * s->linecount + 1;
-                if (!(s->lines = realloc(s->lines, maxlines * sizeof(s->lines[0]))))
-                    die("sent: Unable to reallocate %zu bytes:", maxlines * sizeof(s->lines[0]));
-            }
+/* grow lines array */
+			if (s->linecount >= maxlines) {
+				maxlines = 2 * s->linecount + 1;
+				if (!(s->lines = realloc(s->lines, maxlines * sizeof(s->lines[0]))))
+					die("tens: Unable to reallocate %zu bytes:", maxlines * sizeof(s->lines[0]));
+			}
 
-            blen = strlen(buf);
-            if (!(s->lines[s->linecount] = strdup(buf)))
-                die("sent: Unable to strdup:");
+blen = strlen(buf);
+			if (!(s->lines[s->linecount] = strdup(buf)))
+				die("tens: Unable to strdup:");
             if (s->lines[s->linecount][blen-1] == '\n')
                 s->lines[s->linecount][blen-1] = '\0';
 
@@ -510,8 +510,8 @@ load(FILE *fp)
             break;
     }
 
-    if (!slidecount)
-        die("sent: No slides in file");
+if (!slidecount)
+		die("tens: No slides in file");
 }
 
 void
@@ -583,11 +583,11 @@ xloadfonts(void)
 
     for (i = 0; i < NUMFONTSCALES; i++) {
         for (j = 0; j < (int)LEN(fontfallbacks); j++) {
-            if (MAXFONTSTRLEN < snprintf(fstrs[j], MAXFONTSTRLEN, "%s:size=%d", fontfallbacks[j], FONTSZ(i)))
-                die("sent: Font string too long");
+if (MAXFONTSTRLEN < snprintf(fstrs[j], MAXFONTSTRLEN, "%s:size=%d", fontfallbacks[j], FONTSZ(i)))
+				die("tens: Font string too long");
         }
-        if (!(fonts[i] = drw_fontset_create(d, (const char**)fstrs, LEN(fstrs))))
-            die("sent: Unable to load any font for size %d", FONTSZ(i));
+if (!(fonts[i] = drw_fontset_create(d, (const char**)fstrs, LEN(fstrs))))
+			die("tens: Unable to load any font for size %d", FONTSZ(i));
     }
 
     for (j = 0; j < (int)LEN(fontfallbacks); j++)
@@ -608,9 +608,9 @@ xinit(void)
     xw.uw = usablewidth * xw.w;
     xw.uh = usableheight * xw.h;
     
-    /* Create drawing context */
-    if (!(d = drw_create(xw.w, xw.h)))
-        die("sent: Unable to create drawing context");
+/* Create drawing context */
+	if (!(d = drw_create(xw.w, xw.h)))
+		die("tens: Unable to create drawing context");
     
     sc = drw_scm_create(d, colors, 2);
     drw_setscheme(d, sc);
@@ -633,7 +633,7 @@ xinit(void)
                                            backing:NSBackingStoreBuffered
                                              defer:NO];
     
-    [xw.win setTitle:@"sent"];
+    [xw.win setTitle:@"tens"];
     [xw.win setBackgroundColor:[NSColor colorWithRed:sc[ColBg].r 
                                               green:sc[ColBg].g 
                                                blue:sc[ColBg].b 
@@ -665,16 +665,16 @@ main(int argc, char *argv[])
 
     ARGBEGIN {
     case 'v':
-        fprintf(stderr, "sent-"VERSION"\n");
+        fprintf(stderr, "tens-"VERSION"\n");
         return 0;
     default:
         usage();
     } ARGEND
 
-    if (!argv[0] || !strcmp(argv[0], "-"))
-        fp = stdin;
-    else if (!(fp = fopen(fname = argv[0], "r")))
-        die("sent: Unable to open '%s' for reading:", fname);
+if (!argv[0] || !strcmp(argv[0], "-"))
+		fp = stdin;
+	else if (!(fp = fopen(fname = argv[0], "r")))
+		die("tens: Unable to open '%s' for reading:", fname);
     load(fp);
     fclose(fp);
 
